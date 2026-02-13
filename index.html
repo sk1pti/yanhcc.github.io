@@ -18,25 +18,23 @@
       position: relative;
     }
 
-    /* Сцена */
     .scene {
       position: fixed;
       top: 50%;
-      right: 50px;
+      right: 30px;
       transform: translateY(-50%);
-      width: 280px;
-      height: 280px;
-      perspective: 1200px;
+      width: 300px;
+      height: 300px;
+      perspective: 1500px;
       z-index: 0;
     }
 
-    /* Глобус */
     .globe {
       width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      animation: rotateGlobe 20s linear infinite;
+      animation: rotateGlobe 50s linear infinite;
     }
 
     @keyframes rotateGlobe {
@@ -44,75 +42,26 @@
       to { transform: rotateY(360deg); }
     }
 
-    /* Сфера - чистая, прозрачная */
-    .sphere {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: transparent;
-      border: none;
-      position: absolute;
-      transform-style: preserve-3d;
-    }
-
-    /* Меридианы */
-    .meridian {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 50%;
-      transform: translateX(-50%);
-    }
-
-    .meridian:nth-child(2) { transform: translateX(-50%) rotateY(0deg); }
-    .meridian:nth-child(3) { transform: translateX(-50%) rotateY(30deg); }
-    .meridian:nth-child(4) { transform: translateX(-50%) rotateY(60deg); }
-    .meridian:nth-child(5) { transform: translateX(-50%) rotateY(90deg); }
-    .meridian:nth-child(6) { transform: translateX(-50%) rotateY(120deg); }
-    .meridian:nth-child(7) { transform: translateX(-50%) rotateY(150deg); }
-
-    /* Параллели */
-    .parallel {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 50%;
-      transform: translateY(-50%);
-    }
-
-    .parallel:nth-child(8) { transform: translateY(-50%) rotateX(0deg); }
-    .parallel:nth-child(9) { transform: translateY(-50%) rotateX(30deg); }
-    .parallel:nth-child(10) { transform: translateY(-50%) rotateX(-30deg); }
-    .parallel:nth-child(11) { transform: translateY(-50%) rotateX(60deg); }
-    .parallel:nth-child(12) { transform: translateY(-50%) rotateX(-60deg); }
-
-    /* Кольца */
     .ring {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      border: 1px solid rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.3);
       border-radius: 50%;
+      transform: translate(-50%, -50%);
     }
 
-    .ring:nth-child(13) { width: 320px; height: 320px; animation: ringSpin 15s linear infinite; }
-    .ring:nth-child(14) { width: 400px; height: 400px; animation: ringSpinReverse 20s linear infinite; }
-    .ring:nth-child(15) { width: 280px; height: 280px; border-color: rgba(56, 189, 248, 0.3); }
+    .ring-1 { width: 360px; height: 360px; animation: ringSpin1 30s linear infinite; }
+    .ring-2 { width: 450px; height: 450px; animation: ringSpin2 40s linear infinite; }
+    .ring-3 { width: 540px; height: 540px; animation: ringSpin1 50s linear infinite; }
 
-    @keyframes ringSpin {
-      from { transform: translate(-50%, -50%) rotateX(75deg) rotate(0deg); }
+    @keyframes ringSpin1 {
+      from { transform: translate(-50%, -50%) rotateX(75deg); }
       to { transform: translate(-50%, -50%) rotateX(75deg) rotate(360deg); }
     }
 
-    @keyframes ringSpinReverse {
-      from { transform: translate(-50%, -50%) rotateX(-75deg) rotate(0deg); }
+    @keyframes ringSpin2 {
+      from { transform: translate(-50%, -50%) rotateX(-75deg); }
       to { transform: translate(-50%, -50%) rotateX(-75deg) rotate(-360deg); }
     }
 
@@ -123,8 +72,8 @@
       z-index: 1;
     }
 
-    .hello {
-      font-size: 80px;
+    .hello-text {
+      font-size: 100px;
       font-weight: 800;
       background: linear-gradient(90deg, #0ea5e9, #38bdf8, #7dd3fc, #38bdf8, #0ea5e9, #0284c7, #0ea5e9);
       background-size: 200% auto;
@@ -135,8 +84,7 @@
     }
     @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
 
-    .earth { display: inline-block; animation: spin 8s linear infinite; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .earth-emoji { font-size: 100px; }
 
     .subtitle { font-size: 28px; font-weight: 600; color: #64748b; margin: 20px 0 40px; letter-spacing: 2px; line-height: 1.6; }
     .subtitle-line1 { display: block; }
@@ -150,36 +98,78 @@
 
     .particle { position: fixed; width: 2px; height: 2px; background: rgba(56, 189, 248, 0.5); border-radius: 50%; pointer-events: none; animation: float 15s linear infinite; z-index: 0; }
     @keyframes float { 0% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-100vh); opacity: 0; } }
+
+    /* Кометы */
+    .comet {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .comet::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to left, rgba(56, 189, 248, 0.8), transparent);
+      border-radius: 2px;
+    }
+
+    .comet-1 { top: 100%; left: 10%; animation: cometFly1 12s linear infinite; }
+    .comet-2 { top: 100%; left: 30%; animation: cometFly2 15s linear infinite; animation-delay: -5s; }
+    .comet-3 { top: 100%; left: 50%; animation: cometFly3 18s linear infinite; animation-delay: -8s; }
+    .comet-4 { top: 100%; left: 70%; animation: cometFly4 14s linear infinite; animation-delay: -3s; }
+    .comet-5 { top: 100%; left: 90%; animation: cometFly5 16s linear infinite; animation-delay: -10s; }
+
+    @keyframes cometFly1 {
+      0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(-200px, 200px) rotate(-45deg); opacity: 0; }
+    }
+
+    @keyframes cometFly2 {
+      0% { transform: translate(0, 0) rotate(-30deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(-300px, 150px) rotate(-30deg); opacity: 0; }
+    }
+
+    @keyframes cometFly3 {
+      0% { transform: translate(0, 0) rotate(-60deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(-250px, 250px) rotate(-60deg); opacity: 0; }
+    }
+
+    @keyframes cometFly4 {
+      0% { transform: translate(0, 0) rotate(-40deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(-180px, 180px) rotate(-40deg); opacity: 0; }
+    }
+
+    @keyframes cometFly5 {
+      0% { transform: translate(0, 0) rotate(-50deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translate(-350px, 300px) rotate(-50deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <!-- 3D Глобус -->
   <div class="scene">
     <div class="globe">
-      <div class="sphere">
-        <!-- Меридианы -->
-        <div class="meridian"></div>
-        <div class="meridian"></div>
-        <div class="meridian"></div>
-        <div class="meridian"></div>
-        <div class="meridian"></div>
-        <div class="meridian"></div>
-        <!-- Параллели -->
-        <div class="parallel"></div>
-        <div class="parallel"></div>
-        <div class="parallel"></div>
-        <div class="parallel"></div>
-        <div class="parallel"></div>
-      </div>
       <!-- Кольца -->
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
     </div>
   </div>
 
   <div class="container">
-    <div class="hello">Hello World 🌍</div>
+    <div class="hello"><span class="hello-text">Hello World</span> <span class="earth-emoji">🌍</span></div>
     <div class="subtitle">
       <span class="subtitle-line1">Ян - yanhcc</span>
       <span class="subtitle-line2">Arc Warden - my love</span>
@@ -200,5 +190,12 @@
       document.body.appendChild(p);
     }
   </script>
+
+  <!-- Кометы -->
+  <div class="comet comet-1"></div>
+  <div class="comet comet-2"></div>
+  <div class="comet comet-3"></div>
+  <div class="comet comet-4"></div>
+  <div class="comet comet-5"></div>
 </body>
 </html>
