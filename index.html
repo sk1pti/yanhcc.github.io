@@ -2,10 +2,203 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Yan's Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ян • Arc Warden 🌍</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: radial-gradient(ellipse at center left, #0f172a 0%, #020617 70%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Сцена */
+    .scene {
+      position: fixed;
+      top: 50%;
+      right: 50px;
+      transform: translateY(-50%);
+      width: 280px;
+      height: 280px;
+      perspective: 1200px;
+      z-index: 0;
+    }
+
+    /* Глобус */
+    .globe {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateGlobe 20s linear infinite;
+    }
+
+    @keyframes rotateGlobe {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    /* Сфера - чистая, прозрачная */
+    .sphere {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      position: absolute;
+      transform-style: preserve-3d;
+    }
+
+    /* Меридианы */
+    .meridian {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .meridian:nth-child(2) { transform: translateX(-50%) rotateY(0deg); }
+    .meridian:nth-child(3) { transform: translateX(-50%) rotateY(30deg); }
+    .meridian:nth-child(4) { transform: translateX(-50%) rotateY(60deg); }
+    .meridian:nth-child(5) { transform: translateX(-50%) rotateY(90deg); }
+    .meridian:nth-child(6) { transform: translateX(-50%) rotateY(120deg); }
+    .meridian:nth-child(7) { transform: translateX(-50%) rotateY(150deg); }
+
+    /* Параллели */
+    .parallel {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .parallel:nth-child(8) { transform: translateY(-50%) rotateX(0deg); }
+    .parallel:nth-child(9) { transform: translateY(-50%) rotateX(30deg); }
+    .parallel:nth-child(10) { transform: translateY(-50%) rotateX(-30deg); }
+    .parallel:nth-child(11) { transform: translateY(-50%) rotateX(60deg); }
+    .parallel:nth-child(12) { transform: translateY(-50%) rotateX(-60deg); }
+
+    /* Кольца */
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 50%;
+    }
+
+    .ring:nth-child(13) { width: 320px; height: 320px; animation: ringSpin 15s linear infinite; }
+    .ring:nth-child(14) { width: 400px; height: 400px; animation: ringSpinReverse 20s linear infinite; }
+    .ring:nth-child(15) { width: 280px; height: 280px; border-color: rgba(56, 189, 248, 0.3); }
+
+    @keyframes ringSpin {
+      from { transform: translate(-50%, -50%) rotateX(75deg) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotateX(75deg) rotate(360deg); }
+    }
+
+    @keyframes ringSpinReverse {
+      from { transform: translate(-50%, -50%) rotateX(-75deg) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotateX(-75deg) rotate(-360deg); }
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hello {
+      font-size: 80px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #0ea5e9, #38bdf8, #7dd3fc, #38bdf8, #0ea5e9, #0284c7, #0ea5e9);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: rainbow 4s linear infinite;
+    }
+    @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+    .earth { display: inline-block; animation: spin 8s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .subtitle { font-size: 28px; font-weight: 600; color: #64748b; margin: 20px 0 40px; letter-spacing: 2px; line-height: 1.6; }
+    .subtitle-line1 { display: block; }
+    .subtitle-line2 { display: block; font-size: 22px; margin-top: 8px; }
+
+    .links { margin-top: 60px; display: flex; gap: 20px; justify-content: center; }
+    .link { padding: 14px 30px; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; color: #e2e8f0; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+    .link:hover { background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.6); transform: translateY(-3px); }
+
+    .footer { margin-top: 60px; color: #475569; font-size: 14px; }
+
+    .particle { position: fixed; width: 2px; height: 2px; background: rgba(56, 189, 248, 0.5); border-radius: 50%; pointer-events: none; animation: float 15s linear infinite; z-index: 0; }
+    @keyframes float { 0% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-100vh); opacity: 0; } }
+  </style>
 </head>
 <body>
-  <h1>🌍 Привет, мир!</h1>
-  <p>зач ты сюда зашел? ну я Ян лол</p>
+  <!-- 3D Глобус -->
+  <div class="scene">
+    <div class="globe">
+      <div class="sphere">
+        <!-- Меридианы -->
+        <div class="meridian"></div>
+        <div class="meridian"></div>
+        <div class="meridian"></div>
+        <div class="meridian"></div>
+        <div class="meridian"></div>
+        <div class="meridian"></div>
+        <!-- Параллели -->
+        <div class="parallel"></div>
+        <div class="parallel"></div>
+        <div class="parallel"></div>
+        <div class="parallel"></div>
+        <div class="parallel"></div>
+      </div>
+      <!-- Кольца -->
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hello">Hello World 🌍</div>
+    <div class="subtitle">
+      <span class="subtitle-line1">Ян - yanhcc</span>
+      <span class="subtitle-line2">Arc Warden - my love</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/sk1pti" class="link">🐙 GitHub</a>
+      <a href="https://t.me/yanhcc" class="link">✈️ Telegram</a>
+    </div>
+    <div class="footer">🌍 Built with love</div>
+  </div>
+
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDelay = Math.random() * 15 + 's';
+      document.body.appendChild(p);
+    }
+  </script>
 </body>
 </html>
